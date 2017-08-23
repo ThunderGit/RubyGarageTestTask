@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<title>My TODO List</title>
+<meta charset='utf-8'>
+<meta content='IE=Edge,chrome=1' http-equiv='X-UA-Compatible'>
+<meta content='width=device-width, initial-scale=1.0' name='viewport'>
+<link href='apple-touch-icon.png' rel='apple-touch-icon'>
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="Q5evbNmMeYkB4kggo7gMBQAV9XqhAx4LkxAh+83YL3OJUe9ZHFizQrnWucsFn42pWDocsiHiYuNMjGt8TLRKCw==" />
+<link rel="stylesheet" media="all" href="/assets/application-99e43fe814fd0481c8d18a1dc96f42521b0bb03032d24c6b8fe79330c1a9a9dd.css" />
+<!-- <script src="/assets/application-f3922fa1b626f0ccbe17a2fba54cd67ca64d04efc151ba4e1368cdfe0c48db41.js"></script> -->
+<script src="/assets/appl-script.js"></script>
+<style>
+
+#t1 {
+    background-color: transparent;
+    border: 0px solid;
+    height: 20px;
+    width: 500px;
+    color:#999999;
+    padding:5px 16px;
+}
+
+
+</style>
+<script>
+
+var taskid=4;
+var cellid=0;
+var ulid=0;
+var taskSummaryId=4;
+function AddNewTask(id1,id2)//новое задание
+{
+var newtask=document.getElementById(id1);
+if(newtask.value!="")
+  {
+   var table = document.getElementById(id2);
+   var rows=table.rows.length;
+ 
+   var row = table.insertRow(rows++);
+ 
+   row.className="ui-sortable-handle";
+   row.id="task"+(taskid++);
+   //1. checkbox
+   var cell = row.insertCell(0);
+   cell.id="cid"+(cellid++);
+   cell.className="todo-list-checkbox";
+    var cbh = document.getElementById(cell.id);
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cbh.appendChild(cb);
+   //2. divider 
+   var cell1 = row.insertCell(1);
+   cell1.id="cid"+(cellid++);
+   cell1.className="todo-list-divider";
+   var divh=document.getElementById(cell1.id);
+   var div = document.createElement('div');
+    div.innerHTML="&nbsp";
+    divh.appendChild(div);
+  
+   //3. task synopsis
+    var cell2 = row.insertCell(2);
+    cell2.id="cid"+(cellid++);
+    cell2.className="todo-list-task";
+    var txth=document.getElementById(cell2.id);
+    var txt = document.createElement('input');
+    txt.type = 'text';
+    txt.value=newtask.value;
+    txt.readOnly=true;
+    txt.size="60";
+    txt.style.marginLeft="15px";
+    txt.style.border="0px";
+    txt.id="taskSummary"+(taskSummaryId++);
+    txth.appendChild(txt); 
+    
+    //4. sort/edit/remove task
+    var cell3 = row.insertCell(3);
+    cell3.id="cid"+(cellid++);
+    cell3.className="todo-list-actions";
+    
+    var ulh=document.getElementById(cell3.id);
+    var ul=document.createElement('ul');
+    ul.id="ulid"+(ulid++);
+    ul.className="hidden";
+    ulh.appendChild(ul);
+    
+    
+    var a = document.createElement("a");
+    var ulist = document.getElementById(ul.id);
+    var newItem = document.createElement("li");
+    a.textContent = "Sort"; 
+    a.className="todo-list-task-sort";
+    a.onclick=function(){EditTask(txt.id);};
+    newItem.appendChild(a);
+    ulist.appendChild(newItem);
+    
+    var a1 = document.createElement("a");
+    var ulist1 = document.getElementById(ul.id);
+    var newItem1 = document.createElement("li");
+    a1.textContent = "Edit"; 
+    a1.className="todo-list-task-edit";
+    a1.onclick=function(){EditTask(txt.id);};
+    newItem1.appendChild(a1);
+    ulist1.appendChild(newItem1);
+     
+    var a2 = document.createElement("a");
+    var ulist2 = document.getElementById(ul.id);
+    var newItem2 = document.createElement("li");
+    a2.textContent = "Delete"; 
+    a2.className="todo-list-task-delete";
+    a2.onclick=function(){RemoveTask(row.id);};
+    newItem2.appendChild(a2);
+    ulist2.appendChild(newItem2);
+  }    
+}
+
+function RemoveProject(id)//Удалить проект
+{
+  document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+}
+
+function RemoveTask(id)//Удалить задание
+{
+document.getElementById(id).parentNode.removeChild(document.getElementById(id));
+}
+
+function EditProject(id)//Редактировать проект
+{
+  var NewProjName = prompt('Project Name', document.getElementById(id).innerHTML);
+
+  document.getElementById(id).innerHTML=NewProjName;
+}
+function EditTask(id)//Редактировать задание
+{
+   var idtask=document.getElementById(id);
+   var NewTaskName = prompt('Task Summary', idtask.innerHTML);
+
+   idtask.innerHTML=NewTaskName;
+}
+
+function NewProject()
+{
+//alert("New Project is coming");
+
+
+//Article
+ var x = document.createElement("article");
+    x.id="ProjName2";
+    document.getElementById("list_Id").appendChild(x);
+//Div
+    var divh=document.createElement("div");
+    divh.id="divid";
+    divh.className="todo-header";
+    document.getElementById(x.id).appendChild(divh);
+    //H3
+    var heading = document.createElement("H3");
+    heading.id="Proj2";
+    heading.innerHTML='New Project';
+    document.getElementById(divh.id).appendChild(heading);
+    
+    //Ul li
+    
+    var ul=document.createElement('ul');
+    ul.id="UL_ID";
+    ul.className="hidden";
+    document.getElementById(heading.id).appendChild(ul);
+    
+    
+    var a1 = document.createElement("a");
+    var ulist1 = document.getElementById(ul.id);
+    var newItem1 = document.createElement("li");
+    a1.textContent = "Edit"; 
+    a1.className="todo-action-edit";
+    a1.onclick=function(){EditProject(heading.id);};
+    newItem1.appendChild(a1);
+    ulist1.appendChild(newItem1);
+     
+    var a2 = document.createElement("a");
+    var ulist2 = document.getElementById(ul.id);
+    var newItem2 = document.createElement("li");
+    a2.textContent = "Remove"; 
+    a2.className="todo-action-remove";
+    a2.onclick=function(){RemoveProject(x.id);};
+    newItem2.appendChild(a2);
+    ulist2.appendChild(newItem2);
+    
+    //Div
+    var divh1=document.createElement("div");
+    divh1.id="divid1";
+    divh1.className="todo-bar";
+    document.getElementById(x.id).appendChild(divh1);
+    
+    var divh2=document.createElement("div");
+    divh2.id="divid2";
+    divh2.className="todo-bar-new";
+    document.getElementById(divh1.id).appendChild(divh2);
+    
+    //form
+    var my_form=document.createElement('form');
+    my_form.id="my_form.id";
+    document.getElementById(divh2.id).appendChild(my_form);
+    
+    //input text
+    var inpText=document.createElement('input');
+    inpText.id="NewTaskId2";
+    inpText.type="text";
+    inpText.placeholder="Start typing here to create a task...";
+    document.getElementById(my_form.id).appendChild(inpText);
+    
+    //input button
+    var inpButton=document.createElement('input');
+    inpButton.id="TaskButton";
+    inpButton.type="button";
+    inpButton.innerHTML="Add Task";  
+    inpButton.value="Add Task";
+    document.getElementById(divh2.id).appendChild(inpButton);
+    
+    //table 
+    var tabl=document.createElement('table');
+    tabl.id="tbl2";
+    document.getElementById(my_form.id).appendChild(tabl);
+    
+    
+    
+    inpButton.onclick=function(){AddNewTask(inpText.id,tabl.id);};
+}
+</script>
+</head>
+<body>
+<div class="main">
+<div class="header">
+<h1>Simple TODO Lists</h1>
+<!-- %p from ruby garage -->
+</div>
+<div  class="content">
+<section id="list_Id" class="list">
+<article id="ProjName1" >
+<div  class="todo-header">
+<h3 id="Proj1">Project #1</h3>
+<ul class="hidden">
+<li>
+<a class="todo-action-edit" onclick="EditProject('Proj1')" >Edit</a>
+</li>
+<li>
+<a class="todo-action-remove" onclick="RemoveProject('ProjName1')" >Delete</a>
+</li>
+</ul>
+<!-- <input name="" id="EntNewProjName"  type="text"  style="background-color:#4165a3;"></input> --> 
+</div>
+<div class="todo-bar">
+<div class="todo-bar-new">
+<form>
+<input id="NewTaskId1"  placeholder="Start typing here to create a task..." type="text">
+<button  onclick="AddNewTask('NewTaskId1','tbl1')">Add Task</button>
+</form>
+</div>
+</div>
+<div class="todo-list">
+<table id="tbl1" >
+<tbody class="ui-sortable">
+<tr  id="task1"  class="ui-sortable-handle">
+<td class="todo-list-checkbox">
+<input type="checkbox" >
+</td>
+<td class="todo-list-divider">
+&nbsp;
+</td>
+<td  class="todo-list-task">
+<p id="taskSummary1" readonly>Create db</p>
+<!-- <input name="" id="taskSummary1"  readonly type="text" size="60" style="margin-left:15px;border:0px;" value="Create db"></input> -->
+</td>
+<td class="todo-list-actions">
+<ul class="hidden">
+<li>
+<a class='todo-list-task-sort'>Sort</a>
+</li>
+<li> 
+<a class="todo-list-task-edit"  onclick="EditTask('taskSummary1')">Edit</a>
+</li>
+<li>
+<a class="todo-list-task-delete"  onclick="RemoveTask('task1')">Delete</a>
+</li>
+</ul>
+</td>
+</tr>
+<tr  id="task2"  class="ui-sortable-handle">
+<td class="todo-list-checkbox">
+<input type="checkbox" >
+</td>
+<td  class="todo-list-divider">
+&nbsp;
+</td>
+<td  class="todo-list-task">
+<p id="taskSummary2" readonly>finish rubygarage test task</p>
+<!-- <input name="" id="taskSummary2"  readonly type="text" size="60" style="margin-left:15px;border:0px;" value="finish rubygarage test task"></input>-->
+</td>
+<td class="todo-list-actions">
+<ul class="hidden">
+<li>
+<a class='todo-list-task-sort' >Sort</a>
+</li>
+<li> 
+<a class="todo-list-task-edit" onclick="EditTask('taskSummary2')">Edit</a>
+</li>
+<li>
+<a class="todo-list-task-delete" onclick="RemoveTask('task2')" >Delete</a>
+</li>
+</ul>
+</td>
+</tr>
+<tr  id="task3"  class="ui-sortable-handle">
+<td  class="todo-list-checkbox">
+<input type="checkbox">
+</td>
+<td  class="todo-list-divider">
+&nbsp;
+</td>
+
+<td class="todo-list-task" >
+<p id="taskSummary3" readonly>enjoy victory</p>
+<!-- <input name="" id="taskSummary3"  readonly type="text" size="60" style="margin-left:15px;border:0px;" value="enjoy victory"></input> -->
+</td>
+
+<td  class="todo-list-actions" >
+<ul class="hidden">
+<li>
+<a class='todo-list-task-sort' >Sort</a>
+</li>
+<li> 
+<li> 
+<a class="todo-list-task-edit" onclick="EditTask('taskSummary3')">Edit</a>
+</li>
+<li>
+<a class="todo-list-task-delete" onclick="RemoveTask('task3')" >Delete</a>
+</li>
+</ul>
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+</article>
+</section>
+<div class="new-todo">
+<input type="submit"  onclick="NewProject()" value="Add TODO List">
+</div>
+</div>
+</div>
+</body>
+</html>
