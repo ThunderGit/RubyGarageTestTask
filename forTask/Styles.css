@@ -6,7 +6,8 @@ html {
     -webkit-text-size-adjust: 100%
 }
 body {
-    margin: 0
+    margin: 0;
+    background: url(/forTask/Background.png);
 }
 article,
 aside,
@@ -366,7 +367,7 @@ article .todo-header h3 {
     padding: 0 0 0 33px;
     margin: 0;
     line-height: 50px;
-    text-shadow: 0 1px rgba(0, 0, 0, 0.75)
+    text-shadow: 0 1px rgba(0, 0, 0, 0.75);
 }
 article .todo-header ul {
     margin: 0;
@@ -375,7 +376,7 @@ article .todo-header ul {
     position: absolute;
     top: 17px;
     right: 17px;
-    z-index: 999
+    z-index: 999;
 }
 article .todo-header ul li {
     float: left;
@@ -388,11 +389,11 @@ article .todo-header ul li .todo-action-remove {
     width: 27px;
     height: 17px;
     cursor: pointer;
-    overflow: hidden
+    overflow: hidden;
 }
 article .todo-header ul li .todo-action-remove {
     width: 26px;
-    background: url(/forTask/todo-header-actions.png) -27px 0
+    background: url(/forTask/todo-header-actions.png) -27px 0;
 }
 article .todo-bar {
     background: -webkit-linear-gradient(top, #dedede, #ccc);
@@ -401,12 +402,12 @@ article .todo-bar {
     background: linear-gradient(top, #dedede, #ccc);
     height: 50px;
     border: 1px solid #b0b0a2;
-    border-top: none
+    border-top: none;
 }
 article .todo-bar .todo-bar-new {
     height: 50px;
     background: url(/forTask/todo-bar-cross.png) no-repeat 13px 50%;
-    padding-left: 50px
+    padding-left: 50px;
 }
 article .todo-bar .todo-bar-new form {
     margin: 0;
@@ -438,7 +439,7 @@ article .todo-bar .todo-bar-new form button {
     padding: 0 22px;
     font-size: 14px;
     border-radius: 0 4px 4px 0
-}
+} 
 article .todo-list {
     border-radius: 0 0 13px 13px;
     border: 1px solid #aeb0a0;
@@ -514,7 +515,7 @@ article .todo-list table tr .todo-list-actions ul li .todo-list-task-edit,
 article .todo-list table tr .todo-list-actions ul li .todo-list-task-delete {
     display: block;
     text-indent: -999px;
-    background: url(/forTask/todo-list-actions.png) no-repeat
+    background: url(/forTask/todo-list-actions1.png) no-repeat
 }
 article .todo-list table tr .todo-list-actions ul li .todo-list-task-sort {
     width: 21px
