@@ -11,40 +11,36 @@
 <meta name="csrf-token" content="Q5evbNmMeYkB4kggo7gMBQAV9XqhAx4LkxAh+83YL3OJUe9ZHFizQrnWucsFn42pWDocsiHiYuNMjGt8TLRKCw==" />
 <link rel="stylesheet" media="all" href="/forTask/Styles.css" />
 <script src="/forTask/appl-script.js"></script>
-<style>
 
-#t1 {
-    background-color: transparent;
-    border: 0px solid;
-    height: 20px;
-    width: 500px;
-    color:#999999;
-    padding:5px 16px;
-}
-
-
-</style>
 <script>
 
-var taskid=4;
-var cellid=0;
+var taskId=4;
+var cellId=0;
 var ulid=0;
 var taskSummaryId=4;
-function AddNewTask(id1,id2)//новое задание
+var tableId=2;
+var ProjName=2;
+var Proj=2;
+var NewTaskId=2;
+var divId=1;
+var ul_ID=1;
+var MyForm=1;
+function AddNewTask(id_task,id_table)//РЅРѕРІРѕРµ Р·Р°РґР°РЅРёРµ
 {
-var newtask=document.getElementById(id1);
+var newtask=document.getElementById(id_task);
 if(newtask.value!="")
   {
-   var table = document.getElementById(id2);
+   var table = document.getElementById(id_table);
+
    var rows=table.rows.length;
  
-   var row = table.insertRow(rows++);
+   var row = table.insertRow(rows);
  
    row.className="ui-sortable-handle";
-   row.id="task"+(taskid++);
+   row.id="task"+(taskId++);
    //1. checkbox
    var cell = row.insertCell(0);
-   cell.id="cid"+(cellid++);
+   cell.id="cid"+(cellId++);
    cell.className="todo-list-checkbox";
     var cbh = document.getElementById(cell.id);
     var cb = document.createElement('input');
@@ -52,7 +48,7 @@ if(newtask.value!="")
     cbh.appendChild(cb);
    //2. divider 
    var cell1 = row.insertCell(1);
-   cell1.id="cid"+(cellid++);
+   cell1.id="cid"+(cellId++);
    cell1.className="todo-list-divider";
    var divh=document.getElementById(cell1.id);
    var div = document.createElement('div');
@@ -61,22 +57,17 @@ if(newtask.value!="")
   
    //3. task synopsis
     var cell2 = row.insertCell(2);
-    cell2.id="cid"+(cellid++);
+    cell2.id="cid"+(cellId++);
     cell2.className="todo-list-task";
     var txth=document.getElementById(cell2.id);
-    var txt = document.createElement('input');
-    txt.type = 'text';
-    txt.value=newtask.value;
-    txt.readOnly=true;
-    txt.size="60";
-    txt.style.marginLeft="15px";
-    txt.style.border="0px";
+    var txt = document.createElement('p');
+    txt.innerHTML=newtask.value;
     txt.id="taskSummary"+(taskSummaryId++);
     txth.appendChild(txt); 
     
     //4. sort/edit/remove task
     var cell3 = row.insertCell(3);
-    cell3.id="cid"+(cellid++);
+    cell3.id="cid"+(cellId++);
     cell3.className="todo-list-actions";
     
     var ulh=document.getElementById(cell3.id);
@@ -112,57 +103,63 @@ if(newtask.value!="")
     a2.onclick=function(){RemoveTask(row.id);};
     newItem2.appendChild(a2);
     ulist2.appendChild(newItem2);
+
   }    
 }
 
-function RemoveProject(id)//Удалить проект
+function RemoveProject(id)//РЈРґР°Р»РёС‚СЊ РїСЂРѕРµРєС‚
 {
   document.getElementById(id).parentNode.removeChild(document.getElementById(id));
 }
 
-function RemoveTask(id)//Удалить задание
+function RemoveTask(id)//РЈРґР°Р»РёС‚СЊ Р·Р°РґР°РЅРёРµ
 {
 document.getElementById(id).parentNode.removeChild(document.getElementById(id));
 }
 
-function EditProject(id)//Редактировать проект
+function EditProject(id)//Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РїСЂРѕРµРєС‚
 {
   var NewProjName = prompt('Project Name', document.getElementById(id).innerHTML);
 
+  if(NewProjName!="")
+  {
   document.getElementById(id).innerHTML=NewProjName;
+  }
 }
-function EditTask(id)//Редактировать задание
+function EditTask(id)//Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ Р·Р°РґР°РЅРёРµ
 {
    var idtask=document.getElementById(id);
    var NewTaskName = prompt('Task Summary', idtask.innerHTML);
-
-   idtask.innerHTML=NewTaskName;
+   
+   if(NewTaskName!="")
+   {
+      idtask.innerHTML=NewTaskName;
+   }
 }
 
-function NewProject()
+function NewProject() // РќРѕРІС‹Р№ РїСЂРѕРµРєС‚
 {
 //alert("New Project is coming");
 
-
-//Article
- var x = document.createElement("article");
-    x.id="ProjName2";
+    //Article
+    var x = document.createElement("article");
+    x.id="ProjName"+(ProjName++);
     document.getElementById("list_Id").appendChild(x);
-//Div
+    //Div
     var divh=document.createElement("div");
-    divh.id="divid";
+    divh.id="divId"+(divId++);
     divh.className="todo-header";
     document.getElementById(x.id).appendChild(divh);
     //H3
     var heading = document.createElement("H3");
-    heading.id="Proj2";
-    heading.innerHTML='New Project';
+    heading.id="Proj"+(Proj++);
+    heading.innerHTML="New Project";
     document.getElementById(divh.id).appendChild(heading);
     
     //Ul li
     
     var ul=document.createElement('ul');
-    ul.id="UL_ID";
+    ul.id="UL_ID"+(ul_ID++);
     ul.className="hidden";
     document.getElementById(heading.id).appendChild(ul);
     
@@ -187,42 +184,49 @@ function NewProject()
     
     //Div
     var divh1=document.createElement("div");
-    divh1.id="divid1";
+    divh1.id="divId"+(divId++);
     divh1.className="todo-bar";
     document.getElementById(x.id).appendChild(divh1);
     
     var divh2=document.createElement("div");
-    divh2.id="divid2";
+    divh2.id="divId"+(divId++);
     divh2.className="todo-bar-new";
     document.getElementById(divh1.id).appendChild(divh2);
     
     //form
     var my_form=document.createElement('form');
-    my_form.id="my_form.id";
+    my_form.id="my_form_Id"+(MyForm++);
     document.getElementById(divh2.id).appendChild(my_form);
     
     //input text
     var inpText=document.createElement('input');
-    inpText.id="NewTaskId2";
+    inpText.id='NewTaskId'+(NewTaskId++);
     inpText.type="text";
     inpText.placeholder="Start typing here to create a task...";
     document.getElementById(my_form.id).appendChild(inpText);
     
     //input button
-    var inpButton=document.createElement('input');
+    var inpButton=document.createElement('button');
     inpButton.id="TaskButton";
-    inpButton.type="button";
-    inpButton.innerHTML="Add Task";  
-    inpButton.value="Add Task";
-    document.getElementById(divh2.id).appendChild(inpButton);
+    inpButton.innerHTML="Add Task";
+    document.getElementById(my_form.id).appendChild(inpButton);
+    
+    // Div
+    var divh3=document.createElement("div");
+    divh3.id="divId"+(divId++);
+    divh3.className="todo-list";
+    document.getElementById(divh1.id).appendChild(divh3);
     
     //table 
     var tabl=document.createElement('table');
-    tabl.id="tbl2";
-    document.getElementById(my_form.id).appendChild(tabl);
+    tabl.id="tbl"+(tableId++);
+    document.getElementById(divh3.id).appendChild(tabl);
     
-    
-    
+    //table body
+    var tbd=document.createElement('tbody');
+    tbd.className="ui-sortable";
+    document.getElementById(tabl.id).appendChild(tbd);
+ 
     inpButton.onclick=function(){AddNewTask(inpText.id,tabl.id);};
 }
 </script>
